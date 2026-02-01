@@ -1,15 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useInterview } from '../context/InterviewContext';
-import { answerAPI } from '../services/api';
-import './InterviewPage.css';
+import { useAuth } from '@/context/AuthContext';
+import { useInterview } from '@/context/InterviewContext';
+import { answerAPI } from '@/services/api';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Progress } from '@/components/ui/progress';
+import { 
+  ArrowLeft, 
+  ArrowRight, 
+  Send, 
+  Loader2,
+  CheckCircle2,
+  XCircle,
+  Lightbulb,
+  Trophy,
+  Clock,
+  Mic,
+  MicOff,
+  Camera,
+  CameraOff
+} from 'lucide-react';
 
 const InterviewPage = () => {
   const [answer, setAnswer] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
   const [error, setError] = useState('');
+  const [micEnabled, setMicEnabled] = useState(false);
+  const [cameraEnabled, setCameraEnabled] = useState(false);
 
   const { user } = useAuth();
   const { 
@@ -30,7 +51,6 @@ const InterviewPage = () => {
   }, [currentInterview, navigate]);
 
   useEffect(() => {
-    // Load saved answer for current question
     if (currentInterview) {
       const question = currentInterview.questions[currentQuestion];
       const savedAnswer = answers[question.questionId];
@@ -50,7 +70,7 @@ const InterviewPage = () => {
 
   const question = currentInterview.questions[currentQuestion];
   const isLastQuestion = currentQuestion === currentInterview.questions.length - 1;
-  const totalAnswered = Object.keys(answers).length;
+  const progress = ((currentQuestion + 1) / currentInterview.questions.length) * 100;
 
   const handleSubmit = async () => {
     if (!answer.trim()) {
@@ -100,109 +120,198 @@ const InterviewPage = () => {
     }
   };
 
+  const getScoreColor = (score) => {
+    if (score >= 7) return 'text-green-400';
+    if (score >= 4) return 'text-yellow-400';
+    return 'text-red-400';
+  };
+
+  const getScoreBg = (score) => {
+    if (score >= 7) return 'from-green-500/20 to-emerald-500/20 border-green-500/30';
+    if (score >= 4) return 'from-yellow-500/20 to-orange-500/20 border-yellow-500/30';
+    return 'from-red-500/20 to-rose-500/20 border-red-500/30';
+  };
+
   return (
-    <div className="interview-container">
-      <header className="interview-header">
-        <div className="interview-info">
-          <span className="domain-badge">{currentInterview.domain}</span>
-          <span className="progress">
-            Question {currentQuestion + 1} of {currentInterview.questions.length}
-          </span>
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
+      <header className="border-b border-border/40 bg-background/95 backdrop-blur sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Badge variant="secondary" className="text-sm">
+                {currentInterview.domain}
+              </Badge>
+              <span className="text-sm text-muted-foreground">
+                Question {currentQuestion + 1} of {currentInterview.questions.length}
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMicEnabled(!micEnabled)}
+                className={micEnabled ? 'text-green-400' : 'text-muted-foreground'}
+              >
+                {micEnabled ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setCameraEnabled(!cameraEnabled)}
+                className={cameraEnabled ? 'text-green-400' : 'text-muted-foreground'}
+              >
+                {cameraEnabled ? <Camera className="w-5 h-5" /> : <CameraOff className="w-5 h-5" />}
+              </Button>
+              <Button variant="destructive" size="sm" onClick={handleExit}>
+                Exit
+              </Button>
+            </div>
+          </div>
+          
+          <Progress value={progress} className="mt-3 h-2" />
         </div>
-        <button className="exit-btn" onClick={handleExit}>Exit Interview</button>
       </header>
 
-      <main className="interview-main">
-        <div className="progress-bar">
-          <div 
-            className="progress-fill" 
-            style={{ width: `${((currentQuestion + 1) / currentInterview.questions.length) * 100}%` }}
-          />
-        </div>
+      {/* Main Content */}
+      <main className="flex-1 container mx-auto px-4 py-6 max-w-4xl">
+        {/* Question Card */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant={
+                question.difficulty === 'Easy' ? 'success' : 
+                question.difficulty === 'Medium' ? 'warning' : 
+                'destructive'
+              }>
+                {question.difficulty}
+              </Badge>
+              <Badge variant="outline">{question.category}</Badge>
+            </div>
+            <CardTitle className="text-xl leading-relaxed">
+              {question.questionText}
+            </CardTitle>
+          </CardHeader>
+        </Card>
 
-        <div className="question-section">
-          <div className="question-meta">
-            <span className={`difficulty ${question.difficulty?.toLowerCase()}`}>
-              {question.difficulty}
-            </span>
-            <span className="category">{question.category}</span>
-          </div>
-          <h2 className="question-text">{question.questionText}</h2>
-        </div>
-
-        <div className="answer-section">
-          <label htmlFor="answer">Your Answer</label>
-          <textarea
-            id="answer"
+        {/* Answer Section */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium mb-2">Your Answer</label>
+          <Textarea
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             placeholder="Type your answer here... Be detailed and provide examples where relevant."
             rows={8}
             disabled={!!evaluation}
+            className="resize-none"
           />
           
-          {error && <div className="error-msg">{error}</div>}
+          {error && (
+            <p className="text-destructive text-sm mt-2 flex items-center gap-1">
+              <XCircle className="w-4 h-4" />
+              {error}
+            </p>
+          )}
 
           {!evaluation && (
-            <button 
-              className="submit-answer-btn"
+            <Button 
+              className="mt-4 w-full sm:w-auto"
               onClick={handleSubmit}
               disabled={submitting || !answer.trim()}
             >
-              {submitting ? 'Evaluating...' : 'Submit Answer'}
-            </button>
+              {submitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Evaluating with AI...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4 mr-2" />
+                  Submit Answer
+                </>
+              )}
+            </Button>
           )}
         </div>
 
+        {/* Evaluation Results */}
         {evaluation && (
-          <div className="evaluation-section">
-            <div className="score-display">
-              <div className={`score-circle ${evaluation.score >= 7 ? 'high' : evaluation.score >= 4 ? 'medium' : 'low'}`}>
-                <span className="score-value">{evaluation.score}</span>
-                <span className="score-max">/10</span>
-              </div>
-            </div>
+          <div className="space-y-4">
+            {/* Score Display */}
+            <Card className={`bg-gradient-to-br ${getScoreBg(evaluation.score)} border`}>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-center gap-4">
+                  <div className="text-center">
+                    <div className={`text-5xl font-bold ${getScoreColor(evaluation.score)}`}>
+                      {evaluation.score}
+                    </div>
+                    <div className="text-muted-foreground">out of 10</div>
+                  </div>
+                  <Trophy className={`w-12 h-12 ${getScoreColor(evaluation.score)}`} />
+                </div>
+              </CardContent>
+            </Card>
 
-            <div className="feedback-card">
-              <h3>💬 Feedback</h3>
-              <p>{evaluation.feedback}</p>
-            </div>
+            {/* Feedback */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
+                  AI Feedback
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed">{evaluation.feedback}</p>
+              </CardContent>
+            </Card>
 
-            <div className="ideal-answer-card">
-              <h3>✨ Ideal Answer</h3>
-              <p>{evaluation.idealAnswer}</p>
-            </div>
+            {/* Ideal Answer */}
+            <Card className="border-primary/20 bg-primary/5">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5 text-yellow-400" />
+                  Ideal Answer
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed">{evaluation.idealAnswer}</p>
+              </CardContent>
+            </Card>
           </div>
         )}
+      </main>
 
-        <div className="navigation-buttons">
-          <button 
-            className="nav-btn prev"
+      {/* Navigation Footer */}
+      <footer className="border-t border-border bg-background/95 backdrop-blur sticky bottom-0">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Button 
+            variant="outline"
             onClick={prevQuestion}
             disabled={currentQuestion === 0}
           >
-            ← Previous
-          </button>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Previous
+          </Button>
 
           {evaluation && !isLastQuestion && (
-            <button 
-              className="nav-btn next"
-              onClick={handleNext}
-            >
-              Next Question →
-            </button>
+            <Button onClick={handleNext}>
+              Next Question
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
           )}
 
           {evaluation && isLastQuestion && (
-            <button 
-              className="nav-btn finish"
+            <Button 
               onClick={handleFinish}
+              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
             >
-              View Results 🎉
-            </button>
+              View Results
+              <Trophy className="w-4 h-4 ml-2" />
+            </Button>
           )}
         </div>
-      </main>
+      </footer>
     </div>
   );
 };

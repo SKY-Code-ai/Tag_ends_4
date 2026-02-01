@@ -1,18 +1,25 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { InterviewProvider } from './context/InterviewContext';
-import LoginPage from './pages/LoginPage';
-import DomainPage from './pages/DomainPage';
-import InterviewPage from './pages/InterviewPage';
-import ResultsPage from './pages/ResultsPage';
-import './App.css';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { InterviewProvider } from '@/context/InterviewContext';
+import LoginPage from '@/pages/LoginPage';
+import Dashboard from '@/pages/Dashboard';
+import DomainPage from '@/pages/DomainPage';
+import InterviewPage from '@/pages/InterviewPage';
+import ResultsPage from '@/pages/ResultsPage';
+import ResumeToolsPage from '@/pages/ResumeToolsPage';
+import LearningResourcesPage from '@/pages/LearningResourcesPage';
+import './index.css';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
   if (!isAuthenticated()) {
@@ -30,7 +37,15 @@ const AppRoutes = () => {
     <Routes>
       <Route 
         path="/login" 
-        element={isAuthenticated() ? <Navigate to="/domains" replace /> : <LoginPage />} 
+        element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/domains"
@@ -56,8 +71,24 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route
+        path="/resume"
+        element={
+          <ProtectedRoute>
+            <ResumeToolsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/resources"
+        element={
+          <ProtectedRoute>
+            <LearningResourcesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 };
