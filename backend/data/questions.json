@@ -1,0 +1,324 @@
+{
+  "domains": {
+    "Java": [
+      {
+        "id": "java-1",
+        "question": "What is the difference between JDK, JRE, and JVM?",
+        "category": "Core Java",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "java-2",
+        "question": "Explain the concept of Object-Oriented Programming and its four pillars.",
+        "category": "OOP",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "java-3",
+        "question": "What is the difference between ArrayList and LinkedList? When would you use each?",
+        "category": "Collections",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "java-4",
+        "question": "Explain multithreading in Java. How do you create threads?",
+        "category": "Multithreading",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "java-5",
+        "question": "What are the SOLID principles? Give examples of each.",
+        "category": "Design Principles",
+        "difficulty": "Hard"
+      }
+    ],
+    "Python": [
+      {
+        "id": "python-1",
+        "question": "What is the difference between a list and a tuple in Python?",
+        "category": "Data Types",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "python-2",
+        "question": "Explain decorators in Python. Write a simple example.",
+        "category": "Advanced Python",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "python-3",
+        "question": "What is the GIL (Global Interpreter Lock) and how does it affect multithreading?",
+        "category": "Concurrency",
+        "difficulty": "Hard"
+      },
+      {
+        "id": "python-4",
+        "question": "Explain list comprehensions and generator expressions. When would you use each?",
+        "category": "Pythonic Code",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "python-5",
+        "question": "What are *args and **kwargs? Provide examples.",
+        "category": "Functions",
+        "difficulty": "Easy"
+      }
+    ],
+    "Data Science": [
+      {
+        "id": "ds-1",
+        "question": "Explain the difference between supervised and unsupervised learning.",
+        "category": "Machine Learning",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "ds-2",
+        "question": "What is overfitting? How do you prevent it?",
+        "category": "Model Evaluation",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "ds-3",
+        "question": "Explain the bias-variance tradeoff.",
+        "category": "ML Theory",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "ds-4",
+        "question": "What is cross-validation and why is it important?",
+        "category": "Model Evaluation",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "ds-5",
+        "question": "Explain the difference between L1 and L2 regularization.",
+        "category": "Regularization",
+        "difficulty": "Hard"
+      }
+    ],
+    "Cloud": [
+      {
+        "id": "cloud-1",
+        "question": "What are the different types of cloud computing models (IaaS, PaaS, SaaS)?",
+        "category": "Cloud Basics",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "cloud-2",
+        "question": "Explain the concept of auto-scaling. When and why would you use it?",
+        "category": "Scalability",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "cloud-3",
+        "question": "What is a VPC and why is it important for security?",
+        "category": "Networking",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "cloud-4",
+        "question": "Explain the CAP theorem and its implications for distributed systems.",
+        "category": "Distributed Systems",
+        "difficulty": "Hard"
+      },
+      {
+        "id": "cloud-5",
+        "question": "What is Infrastructure as Code? Name some tools used for it.",
+        "category": "DevOps",
+        "difficulty": "Easy"
+      }
+    ],
+    "QA": [
+      {
+        "id": "qa-1",
+        "question": "What is the difference between manual testing and automation testing?",
+        "category": "Testing Basics",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "qa-2",
+        "question": "Explain the testing pyramid. What types of tests should you have most of?",
+        "category": "Test Strategy",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "qa-3",
+        "question": "What is the difference between smoke testing and regression testing?",
+        "category": "Testing Types",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "qa-4",
+        "question": "Explain BDD (Behavior-Driven Development) and its advantages.",
+        "category": "Testing Methodologies",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "qa-5",
+        "question": "How do you design test cases for an API endpoint?",
+        "category": "API Testing",
+        "difficulty": "Medium"
+      }
+    ],
+    "HR": [
+      {
+        "id": "hr-1",
+        "question": "Tell me about yourself and your career goals.",
+        "category": "Introduction",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "hr-2",
+        "question": "Describe a challenging situation you faced at work and how you handled it.",
+        "category": "Behavioral",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "hr-3",
+        "question": "Why do you want to work for our company?",
+        "category": "Motivation",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "hr-4",
+        "question": "Where do you see yourself in 5 years?",
+        "category": "Career Goals",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "hr-5",
+        "question": "Tell me about a time when you had to work with a difficult team member.",
+        "category": "Behavioral",
+        "difficulty": "Medium"
+      }
+    ],
+    "Electrical": [
+      {
+        "id": "elec-1",
+        "question": "Explain Ohm's Law and its applications.",
+        "category": "Basic Circuits",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "elec-2",
+        "question": "What is the difference between AC and DC current?",
+        "category": "Fundamentals",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "elec-3",
+        "question": "Explain the working principle of a transformer.",
+        "category": "Transformers",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "elec-4",
+        "question": "What are the different types of motors and their applications?",
+        "category": "Motors",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "elec-5",
+        "question": "Explain power factor and its importance in electrical systems.",
+        "category": "Power Systems",
+        "difficulty": "Hard"
+      }
+    ],
+    "JavaScript": [
+      {
+        "id": "js-1",
+        "question": "Explain the difference between var, let, and const.",
+        "category": "Variables",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "js-2",
+        "question": "What is closure in JavaScript? Provide an example.",
+        "category": "Advanced JS",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "js-3",
+        "question": "Explain the event loop and how JavaScript handles asynchronous operations.",
+        "category": "Async",
+        "difficulty": "Hard"
+      },
+      {
+        "id": "js-4",
+        "question": "What is the difference between == and === operators?",
+        "category": "Operators",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "js-5",
+        "question": "Explain prototypal inheritance in JavaScript.",
+        "category": "OOP",
+        "difficulty": "Hard"
+      }
+    ],
+    "React": [
+      {
+        "id": "react-1",
+        "question": "What is the Virtual DOM and how does React use it?",
+        "category": "Core Concepts",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "react-2",
+        "question": "Explain the difference between class components and functional components.",
+        "category": "Components",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "react-3",
+        "question": "What are React hooks? Explain useState and useEffect.",
+        "category": "Hooks",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "react-4",
+        "question": "How does React handle state management? What are the options?",
+        "category": "State Management",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "react-5",
+        "question": "Explain the component lifecycle methods in React.",
+        "category": "Lifecycle",
+        "difficulty": "Medium"
+      }
+    ],
+    "System Design": [
+      {
+        "id": "sd-1",
+        "question": "How would you design a URL shortening service like bit.ly?",
+        "category": "System Design",
+        "difficulty": "Medium"
+      },
+      {
+        "id": "sd-2",
+        "question": "Explain horizontal vs vertical scaling. When would you use each?",
+        "category": "Scalability",
+        "difficulty": "Easy"
+      },
+      {
+        "id": "sd-3",
+        "question": "How would you design a rate limiter?",
+        "category": "System Design",
+        "difficulty": "Hard"
+      },
+      {
+        "id": "sd-4",
+        "question": "What is database sharding and when would you use it?",
+        "category": "Databases",
+        "difficulty": "Hard"
+      },
+      {
+        "id": "sd-5",
+        "question": "Explain the differences between SQL and NoSQL databases.",
+        "category": "Databases",
+        "difficulty": "Easy"
+      }
+    ]
+  }
+}
